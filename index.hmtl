@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta  http-equiv="Content-Type" content="text/html" charset="ISO-8859-1"   >
+<title>welcome to chat application</title>
+</head>
+<body>
+<textArea id="messagesTextArea" readonly="readonly" rows="10" cols="45"></textArea><br/>
+Enter your message:<input type="text"  id="messageText" size="50" />	
+<input type="button" value="send" onclick="sendMessage();"/>
+<script type="text/javascript">
+	var websocket=new WebSocket("ws://192.168.1.26:8080/jaiganeshji/chatroomServerEndpoint");
+		websocket.onmessage=function processMessage(message){
+		var jsonData =JSON.parse(message.data);
+		if(jsonData.message!=null) 
+				messagesTextArea.value += jsonData.message +"\n";
+		}
+		function sendMessage(){
+			websocket.send(messageText.value);
+ 			messageText.value="";
+			
+		}
+		
+</script>
+</body>
+</html>
